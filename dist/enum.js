@@ -81,4 +81,4 @@ console.log(0 /* X */);
 let direction2 = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */];
 console.log(direction2);
 console.log('---Ambition enums---');
-console.log(E5);
+//console.log(E5.Y);

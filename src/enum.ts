@@ -118,4 +118,4 @@ declare enum E5 {
    Z = 2
 }
 
-console.log(E5);
+//console.log(E5.Y);
