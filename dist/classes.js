@@ -1,193 +1,158 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Greeter = /** @class */ (function () {
-    function Greeter(message) {
+class Greeter {
+    constructor(message) {
         this.greeting = message;
     }
-    Greeter.prototype.greet = function () {
-        console.log("Hello, " + this.greeting);
-    };
-    return Greeter;
-}());
-var greeter = new Greeter('world');
+    greet() {
+        console.log(`Hello, ${this.greeting}`);
+    }
+}
+let greeter = new Greeter('world');
 greeter.greet();
 console.log('---Inheritance---');
-var Animal2 = /** @class */ (function () {
-    function Animal2(name) {
+class Animal2 {
+    constructor(name) {
         this.name = name;
     }
-    Animal2.prototype.move = function (distanceInMeter) {
-        if (distanceInMeter === void 0) { distanceInMeter = 0; }
-        console.log("Animal moved " + distanceInMeter);
-    };
-    return Animal2;
-}());
-var Dog2 = /** @class */ (function (_super) {
-    __extends(Dog2, _super);
-    function Dog2(name) {
-        var _this = _super.call(this, name) || this;
-        console.log('Dog constructor was invoked');
-        return _this;
+    move(distanceInMeter = 0) {
+        console.log(`Animal moved ${distanceInMeter}`);
     }
-    Dog2.prototype.bark = function () {
-        console.log("Woof! Woof, I am " + this.name);
-    };
-    return Dog2;
-}(Animal2));
-var dog = new Dog2("Dog");
+}
+class Dog2 extends Animal2 {
+    constructor(name) {
+        super(name);
+        console.log('Dog constructor was invoked');
+    }
+    bark() {
+        console.log(`Woof! Woof, I am ${this.name}`);
+    }
+}
+const dog = new Dog2("Dog");
 dog.bark();
 dog.move(10);
-console.log("---Understanding protected---");
-var Person = /** @class */ (function () {
-    function Person(name) {
+console.log(`---Understanding protected---`);
+class Person {
+    constructor(name) {
         this.name = name;
     }
-    Person.prototype.Greet = function () {
-        console.log("My name is " + this.name);
-    };
-    return Person;
-}());
-var Employee = /** @class */ (function (_super) {
-    __extends(Employee, _super);
-    function Employee(name, department) {
-        var _this = _super.call(this, name) || this;
-        _this.department = department;
-        return _this;
+    Greet() {
+        console.log(`My name is ${this.name}`);
     }
-    Employee.prototype.getElevatorPitch = function () {
-        return "Hello, my name is " + this.name + " and I work in " + this.department;
-    };
-    return Employee;
-}(Person));
+}
+class Employee extends Person {
+    constructor(name, department) {
+        super(name);
+        this.department = department;
+    }
+    getElevatorPitch() {
+        return `Hello, my name is ${this.name} and I work in ${this.department}`;
+    }
+}
 //let person = new Person('Kostya');
 //person.Greet();
-var howard = new Employee('Howard', "Sales");
+let howard = new Employee('Howard', "Sales");
 console.log(howard.getElevatorPitch());
 //console.log(howard.name); --Compile error
 console.log('---Readonly modifier---');
-var Octopus = /** @class */ (function () {
-    function Octopus(name) {
+class Octopus {
+    constructor(name) {
         this.numberOfLegs = 8;
         this.name = name;
     }
-    return Octopus;
-}());
-var dad = new Octopus('Man with the 8 strong legs');
+}
+let dad = new Octopus('Man with the 8 strong legs');
 //dad.name = 'sdf'; --Compile error
 console.log('---Parameter properties---');
-var Octopus2 = /** @class */ (function () {
-    function Octopus2(name) {
+class Octopus2 {
+    constructor(name) {
         this.name = name;
     }
-    Octopus2.prototype.say = function () {
-        console.log("I am " + this.name);
-    };
-    Octopus2.prototype.tryChangeName = function (name) {
+    say() {
+        console.log(`I am ${this.name}`);
+    }
+    tryChangeName(name) {
         this.name = name;
-    };
-    return Octopus2;
-}());
-var dad2 = new Octopus2('Scub111');
+    }
+}
+let dad2 = new Octopus2('Scub111');
 dad2.name = "Igor";
 dad2.say();
 console.log('---Accessors---');
-var passcode = 'secret passcode';
-var Employee2 = /** @class */ (function () {
-    function Employee2() {
+let passcode = 'secret passcode';
+class Employee2 {
+    constructor() {
         this._fullName = '';
     }
-    Object.defineProperty(Employee2.prototype, "fullName", {
-        get: function () {
-            return this._fullName;
-        },
-        set: function (name) {
-            if (passcode && passcode === 'secret passcode') {
-                this._fullName = name;
-            }
-            else {
-                console.log('Error: Unauthorized update of employee!');
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return Employee2;
-}());
-var employee2 = new Employee2();
+    get fullName() {
+        return this._fullName;
+    }
+    set fullName(name) {
+        if (passcode && passcode === 'secret passcode') {
+            this._fullName = name;
+        }
+        else {
+            console.log('Error: Unauthorized update of employee!');
+        }
+    }
+}
+let employee2 = new Employee2();
 employee2.fullName = 'Test fullName';
 if (employee2.fullName) {
     console.log(employee2.fullName);
 }
 console.log('---Static properties---');
-var Grid = /** @class */ (function () {
-    function Grid(scale) {
+class Grid {
+    constructor(scale) {
         this.scale = scale;
     }
-    Grid.prototype.calculateDistanceFromOrigin = function (point) {
-        var xDist = point.x - Grid.origin.x;
-        var yDist = point.y - Grid.origin.y;
+    calculateDistanceFromOrigin(point) {
+        let xDist = point.x - Grid.origin.x;
+        let yDist = point.y - Grid.origin.y;
         return Math.sqrt(xDist * xDist + yDist * yDist) / this.scale;
-    };
-    Grid.origin = { x: 0, y: 0 };
-    return Grid;
-}());
-var grid1 = new Grid(1);
-var grid2 = new Grid(5);
+    }
+}
+Grid.origin = { x: 0, y: 0 };
+let grid1 = new Grid(1);
+let grid2 = new Grid(5);
 console.log(grid1.calculateDistanceFromOrigin({ x: 10, y: 10 }));
 console.log(grid2.calculateDistanceFromOrigin({ x: 10, y: 10 }));
 console.log('---Abstract classes---');
-var Department2 = /** @class */ (function () {
-    function Department2(name) {
+class Department2 {
+    constructor(name) {
         this.name = name;
     }
-    Department2.prototype.printName = function () {
-        console.log("Department name: " + this.name);
-    };
-    return Department2;
-}());
-var AccountingDeparment = /** @class */ (function (_super) {
-    __extends(AccountingDeparment, _super);
-    function AccountingDeparment() {
-        return _super.call(this, 'Accounting and Auditing') || this;
+    printName() {
+        console.log(`Department name: ${this.name}`);
     }
-    AccountingDeparment.prototype.printName = function () {
-        _super.prototype.printName.call(this);
+}
+class AccountingDeparment extends Department2 {
+    constructor() {
+        super('Accounting and Auditing');
+    }
+    printName() {
+        super.printName();
         console.log('Overrided printName');
-    };
-    AccountingDeparment.prototype.printMeeting = function () {
+    }
+    printMeeting() {
         console.log('The Accounting Department meets each Monday at 10am');
-    };
-    AccountingDeparment.prototype.generateReport = function () {
+    }
+    generateReport() {
         console.log('Generate Report');
-    };
-    return AccountingDeparment;
-}(Department2));
-var accountingDeparment = new AccountingDeparment();
+    }
+}
+let accountingDeparment = new AccountingDeparment();
 accountingDeparment.printName();
 accountingDeparment.printMeeting();
 accountingDeparment.generateReport();
 console.log('---Using a class as an interface---');
-var Point4 = /** @class */ (function () {
-    function Point4() {
+class Point4 {
+    constructor() {
         this.x = 0;
         this.y = 0;
     }
-    return Point4;
-}());
-var printPoint3d = function (point3d) {
-    console.log(point3d.x + " - " + point3d.y + " - " + point3d.z);
+}
+const printPoint3d = (point3d) => {
+    console.log(`${point3d.x} - ${point3d.y} - ${point3d.z}`);
 };
-var point3d = { x: 1, y: 2, z: 3 };
+let point3d = { x: 1, y: 2, z: 3 };
 printPoint3d(point3d);
